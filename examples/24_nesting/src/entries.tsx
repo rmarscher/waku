@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { defineEntries } from 'waku/server';
-import { Slot } from 'waku/client';
+import { defineEntries } from '@rmarscher/waku/server';
+import { Slot } from '@rmarscher/waku/client';
 
 import App from './components/App';
 import InnerApp from './components/InnerApp';

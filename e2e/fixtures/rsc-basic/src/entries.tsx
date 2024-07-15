@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { defineEntries } from 'waku/server';
+import { defineEntries } from '@rmarscher/waku/server';
 
 const App = lazy(() => import('./components/App.js'));
 

@@ -115,7 +115,7 @@ const createMainViteServer = (
       ],
       optimizeDeps: {
         include: ['react-server-dom-webpack/client', 'react-dom'],
-        exclude: ['waku'],
+        exclude: ['@rmarscher/waku'],
         entries: [
           `${config.srcDir}/${SRC_ENTRIES}.*`,
           // HACK hard-coded "pages"
@@ -123,7 +123,7 @@ const createMainViteServer = (
         ],
       },
       ssr: {
-        external: ['waku'],
+        external: ['@rmarscher/waku'],
         noExternal: ['react-server-dom-webpack'],
       },
       server: { middlewareMode: true },
@@ -139,9 +139,9 @@ const createMainViteServer = (
   };
 
   const loadServerModuleMain = async (id: string) => {
-    if (id === 'waku' || id.startsWith('waku/')) {
+    if (id === '@rmarscher/waku' || id.startsWith('@rmarscher/waku/')) {
       // HACK I don't know why this is necessary.
-      // `external: ['waku']` doesn't somehow work?
+      // `external: ['@rmarscher/waku']` doesn't somehow work?
       return import(id);
     }
     const vite = await vitePromise;
@@ -225,7 +225,7 @@ const createRscViteServer = (
       ],
       optimizeDeps: {
         include: ['react-server-dom-webpack/client', 'react-dom'],
-        exclude: ['waku'],
+        exclude: ['@rmarscher/waku'],
         entries: [
           `${config.srcDir}/${SRC_ENTRIES}.*`,
           // HACK hard-coded "pages"
@@ -245,7 +245,7 @@ const createRscViteServer = (
             'react/jsx-runtime',
             'react/jsx-dev-runtime',
           ],
-          exclude: ['waku'],
+          exclude: ['@rmarscher/waku'],
         },
       },
       appType: 'custom',

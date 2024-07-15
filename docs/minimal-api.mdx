@@ -12,7 +12,7 @@ To use React Server Components in Waku, you need to create an `entries.ts` file 
 
 ```tsx
 import { lazy } from 'react';
-import { defineEntries } from 'waku/server';
+import { defineEntries } from '@rmarscher/waku/server';
 
 const App = lazy(() => import('./components/App.js'));
 
@@ -34,7 +34,7 @@ To render a React Server Component on the client, you can use the `Root` and `Sl
 
 ```tsx
 import { createRoot } from 'react-dom/client';
-import { Root, Slot } from 'waku/client';
+import { Root, Slot } from '@rmarscher/waku/client';
 
 const rootElement = (
   <StrictMode>
@@ -50,7 +50,7 @@ createRoot(document.getElementById('root')!).render(rootElement);
 The `initialInput` prop can be passed to the `Root` Component, overriding the default input which is `""`. You can also re-render a React Server Component with new input.
 
 ```tsx
-import { useRefetch } from 'waku/client';
+import { useRefetch } from '@rmarscher/waku/client';
 
 const Component = () => {
   const refetch = useRefetch();
@@ -67,7 +67,7 @@ In addition to the `renderEntries` function, you can also optionally specify `ge
 `entries.ts`.
 
 ```tsx
-import { defineEntries } from 'waku/server';
+import { defineEntries } from '@rmarscher/waku/server';
 
 export default defineEntries(
   // renderEntries

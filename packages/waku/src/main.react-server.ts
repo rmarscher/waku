@@ -1,5 +1,5 @@
-export { Link, useRouter_UNSTABLE } from 'waku/router/client';
+export { Link, useRouter_UNSTABLE } from '@rmarscher/waku/router/client';
 
-export { createPages } from 'waku/router/server';
+export { createPages } from '@rmarscher/waku/router/server';
 
-export { getEnv } from 'waku/server';
+export { getEnv } from '@rmarscher/waku/server';

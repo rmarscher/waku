@@ -1,6 +1,6 @@
 import { lazy } from 'react';
-import { defineEntries } from 'waku/server';
-import { Slot } from 'waku/client';
+import { defineEntries } from '@rmarscher/waku/server';
+import { Slot } from '@rmarscher/waku/client';
 
 const App = lazy(() => import('@/components/App'));
 

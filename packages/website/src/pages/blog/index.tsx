@@ -1,4 +1,4 @@
-import { Link } from 'waku';
+import { Link } from '@rmarscher/waku';
 import { readdirSync, readFileSync } from 'node:fs';
 import { compileMDX } from 'next-mdx-remote/rsc';
 

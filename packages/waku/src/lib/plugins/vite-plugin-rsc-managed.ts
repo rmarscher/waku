@@ -12,7 +12,7 @@ const stripExt = (fname: string) => {
 };
 
 const getManagedEntries = () => `
-import { fsRouter } from 'waku/router/server';
+import { fsRouter } from '@rmarscher/waku/router/server';
 
 export default fsRouter(
   import.meta.url,
@@ -25,7 +25,7 @@ export default fsRouter(
 const getManagedMain = () => `
 import { Component, StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-import { Router } from 'waku/router/client';
+import { Router } from '@rmarscher/waku/router/client';
 
 const rootElement = (
   <StrictMode>

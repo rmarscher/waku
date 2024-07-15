@@ -20,7 +20,7 @@ This website is developed with Waku. The [GitHub repository](https://github.com/
 The current version of Waku is based on Vite and leans on the Vite API and its ecosystem as much as possible. Waku has a server entry API with a file named `entries.tsx` placed at the root of the `src` folder:
 
 ```tsx
-import { defineEntries } from 'waku/server';
+import { defineEntries } from '@rmarscher/waku/server';
 
 export default defineEntries(
   // renderEntries
@@ -38,7 +38,7 @@ The client code can use the server like this:
 
 ```tsx
 import { createRoot } from 'react-dom/client';
-import { Root, Slot } from 'waku/client';
+import { Root, Slot } from '@rmarscher/waku/client';
 
 const rootElement = (
   <Root initialInput="Waku">

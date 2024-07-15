@@ -1,6 +1,6 @@
 'use server';
 
-import { rerender } from 'waku/server';
+import { rerender } from '@rmarscher/waku/server';
 
 // module state on server
 let message = '';

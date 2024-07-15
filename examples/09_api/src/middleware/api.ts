@@ -1,4 +1,4 @@
-import type { Middleware } from 'waku/config';
+import type { Middleware } from '@rmarscher/waku/config';
 
 const stringToStream = (str: string): ReadableStream => {
   const encoder = new TextEncoder();

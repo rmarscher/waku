@@ -1,4 +1,4 @@
-import type { Middleware } from 'waku/config';
+import type { Middleware } from '@rmarscher/waku/config';
 import wakuConfig from '../../waku.config.js';
 
 const { rscPath } = wakuConfig;

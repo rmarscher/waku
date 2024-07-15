@@ -1,4 +1,4 @@
-import { Link } from 'waku';
+import { Link } from '@rmarscher/waku';
 
 export default async function AboutPage() {
   const data = await getData();

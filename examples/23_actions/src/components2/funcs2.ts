@@ -1,6 +1,6 @@
 'use server';
 
-import { unstable_getCustomContext as getCustomContext } from 'waku/server';
+import { unstable_getCustomContext as getCustomContext } from '@rmarscher/waku/server';
 
 export const greet = async (name: string) => {
   await Promise.resolve();

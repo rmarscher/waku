@@ -60,7 +60,7 @@ const transformClient = (
     const exportNames = collectExportNames(mod);
     let newCode = `
 import { createServerReference } from 'react-server-dom-webpack/client';
-import { callServerRSC } from 'waku/client';
+import { callServerRSC } from '@rmarscher/waku/client';
 `;
     for (const name of exportNames) {
       newCode += `

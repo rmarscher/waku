@@ -84,7 +84,7 @@
     "terminate": "^2.8.0",
     "typescript": "^5.5.3",
     "wait-port": "^1.1.0",
-    "waku": "workspace:*"
+    "@rmarscher/waku": "workspace:*"
   },
   "pnpm": {
     "overrides": {

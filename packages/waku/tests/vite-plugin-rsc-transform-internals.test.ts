@@ -371,7 +371,7 @@ export default async function log4(mesg) {
     expect(await transform(code, '/src/func.ts')).toMatchInlineSnapshot(`
       "
       import { createServerReference } from 'react-server-dom-webpack/client';
-      import { callServerRSC } from 'waku/client';
+      import { callServerRSC } from '@rmarscher/waku/client';
 
       export const log1 = createServerReference('/src/func.ts#log1', callServerRSC);
 

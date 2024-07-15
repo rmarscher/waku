@@ -17,10 +17,10 @@ const ADDITIONAL_HTML_HEAD = `
 `.trim();
 
 const DEFAULT_MIDDLEWARE = () => [
-  import('waku/middleware/dev-server'),
-  import('waku/middleware/headers'),
-  import('waku/middleware/ssr'),
-  import('waku/middleware/rsc'),
+  import('@rmarscher/waku/middleware/dev-server'),
+  import('@rmarscher/waku/middleware/headers'),
+  import('@rmarscher/waku/middleware/ssr'),
+  import('@rmarscher/waku/middleware/rsc'),
 ];
 
 // Keep async function for future extension

@@ -1,6 +1,6 @@
 import * as cookie from 'cookie';
 
-import type { Middleware } from 'waku/config';
+import type { Middleware } from '@rmarscher/waku/config';
 
 // XXX we would probably like to extend config.
 const COOKIE_OPTS = {};

@@ -4,8 +4,8 @@ import fsPromises from 'node:fs/promises';
 import {
   defineEntries,
   unstable_getCustomContext as getCustomContext,
-} from 'waku/server';
-import { Slot } from 'waku/client';
+} from '@rmarscher/waku/server';
+import { Slot } from '@rmarscher/waku/client';
 
 import App from './components/App';
 

@@ -1,4 +1,4 @@
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { RootLayout } from './templates/root-layout';
 import { HomePage } from './templates/home-page';

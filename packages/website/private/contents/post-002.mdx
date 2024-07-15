@@ -23,7 +23,7 @@ Both `createLayout` and `createPage` accept a configuration object to specify th
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { RootLayout } from './templates/root-layout';
 import { HomePage } from './templates/home-page';
@@ -53,7 +53,7 @@ Pages can be rendered as a single route (e.g., `/about`).
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { AboutPage } from './templates/about-page';
 import { BlogIndexPage } from './templates/blog-index-page';
@@ -81,7 +81,7 @@ Pages can also render a segment route (e.g., `/blog/[slug]`). The rendered React
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { BlogArticlePage } from './templates/blog-article-page';
 import { ProductCategoryPage } from './templates/product-category-page';
@@ -110,7 +110,7 @@ Static paths (or other values) could also be generated programmatically.
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { getBlogPaths } from './lib/get-blog-paths';
 import { BlogArticlePage } from './templates/blog-article-page';
@@ -133,7 +133,7 @@ Routes can contain multiple segments (e.g., `/shop/[category]/[product]`).
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { ProductDetailPage } from './templates/product-detail-page';
 
@@ -152,7 +152,7 @@ For static prerendering of nested segment routes, the `staticPaths` array is ins
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { ProductDetailPage } from './templates/product-detail-page';
 
@@ -179,7 +179,7 @@ For example, the `/app/profile/settings` route would receive a `catchAll` prop w
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { DashboardPage } from './templates/dashboard-page';
 
@@ -204,7 +204,7 @@ The root layout rendered at `path: '/'` is especially useful. It can be used for
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { RootLayout } from './templates/root-layout';
 
@@ -258,7 +258,7 @@ Layouts are also helpful further down the tree. For example, you could add a lay
 
 ```tsx
 // ./src/entries.tsx
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import { BlogLayout } from './templates/blog-layout';
 

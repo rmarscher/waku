@@ -1,8 +1,8 @@
-/** @type {import('waku/config').Config} */
+/** @type {import('@rmarscher/waku/config').Config} */
 export default {
   middleware: () => [
-    import('waku/middleware/dev-server'),
-    import('waku/middleware/rsc'),
-    import('waku/middleware/fallback'),
+    import('@rmarscher/waku/middleware/dev-server'),
+    import('@rmarscher/waku/middleware/rsc'),
+    import('@rmarscher/waku/middleware/fallback'),
   ],
 };

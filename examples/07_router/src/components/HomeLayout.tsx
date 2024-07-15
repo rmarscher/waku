@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Link } from 'waku/router/client';
+import { Link } from '@rmarscher/waku/router/client';
 
 import '../styles.css';
 

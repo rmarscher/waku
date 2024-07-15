@@ -29,7 +29,7 @@ export const CLIENT_MODULE_MAP = {
   react: 'react',
   'rd-server': 'react-dom/server.edge',
   'rsdw-client': 'react-server-dom-webpack/client.edge',
-  'waku-client': 'waku/client',
+  'waku-client': '@rmarscher/waku/client',
 } as const;
 export const CLIENT_PREFIX = 'client/';
 
@@ -274,7 +274,7 @@ export const renderHtml = async (
                 );
                 if (fileWithAbsolutePath.startsWith(wakuDist)) {
                   const id =
-                    'waku' +
+                    '@rmarscher/waku' +
                     fileWithAbsolutePath
                       .slice(wakuDist.length)
                       .replace(/\.\w+$/, '');

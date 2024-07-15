@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { createPages } from 'waku';
+import { createPages } from '@rmarscher/waku';
 
 import FooPage from './components/FooPage';
 

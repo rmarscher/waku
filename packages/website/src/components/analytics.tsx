@@ -1,4 +1,4 @@
-import { getEnv } from 'waku/server';
+import { getEnv } from '@rmarscher/waku/server';
 
 export const Analytics = () => {
   const trackingId = getEnv('TRACKING_ID');

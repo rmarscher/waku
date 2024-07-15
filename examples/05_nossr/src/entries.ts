@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { fsRouter } from 'waku/router/server';
+import { fsRouter } from '@rmarscher/waku/router/server';
 
 export default {
   ...fsRouter(import.meta.url, (file) =>

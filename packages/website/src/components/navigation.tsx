@@ -1,7 +1,7 @@
 'use client';
 
 import cx from 'classnames';
-import { Link } from 'waku';
+import { Link } from '@rmarscher/waku';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { menuAtom, destinationAtom, scrolledAtom } from '../atoms';

@@ -196,7 +196,7 @@ export class WakuStack extends cdk.Stack {
             tryBundle(outputDir) {
               spawnSync(
                 'pnpm',
-                ['exec', 'waku', 'build', '--with-aws-lambda'],
+                ['exec', '@rmarscher/waku', 'build', '--with-aws-lambda'],
                 { stdio: 'inherit' },
               );
               cpSync('dist', outputDir, { recursive: true, dereference: true });

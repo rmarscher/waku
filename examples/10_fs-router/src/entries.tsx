@@ -1,4 +1,4 @@
-import { fsRouter } from 'waku/router/server';
+import { fsRouter } from '@rmarscher/waku/router/server';
 
 declare global {
   interface ImportMeta {

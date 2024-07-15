@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-import { Root, Slot } from 'waku/client';
+import { Root, Slot } from '@rmarscher/waku/client';
 
 const rootElement = (
   <StrictMode>

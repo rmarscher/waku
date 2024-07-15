@@ -1,4 +1,4 @@
-import { Link } from 'waku';
+import { Link } from '@rmarscher/waku';
 
 import { getPokemonPaths } from '../lib';
 import { pokemon } from '../lib/pokemon';

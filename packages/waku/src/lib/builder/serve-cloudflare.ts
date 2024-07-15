@@ -3,6 +3,12 @@ import { runner } from '../hono/runner.js';
 
 const loadEntries = () => import(import.meta.env.WAKU_ENTRIES_FILE!);
 let serveWaku: ReturnType<typeof runner> | undefined;
+fetch
+export interface CloudflareEnv {
+  ASSETS: {
+    fetch: (input: RequestInit | URL, init?: RequestInit) => Promise<Response>
+  };
+}
 
 export interface CloudflareEnv {
   ASSETS: {

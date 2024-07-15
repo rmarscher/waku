@@ -13,7 +13,7 @@ In some cases you may want to inject additional content into the SSR stream befo
 Create a new file in your project, for example `./src/middleware/stream-interceptor.ts`:
 
 ```ts
-import type { Middleware } from 'waku/config';
+import type { Middleware } from '@rmarscher/waku/config';
 
 // key below is probably best to have at a central config location to allow for it to be changed easily
 export const themeCookieKey = 'waku-color-theme';
@@ -61,14 +61,14 @@ In your `waku.config.ts` file, import the middleware and add it to the `middlewa
 ```ts
 import streamInterceptor from './src/middleware/stream-interceptor';
 
-/** @type {import('waku/config').Config} */
+/** @type {import('@rmarscher/waku/config').Config} */
 export default {
   // ...
   middleware: () => [
     import('./src/middleware/themePreload.js'), // + this is the one we just added
-    import('waku/middleware/dev-server'),
-    import('waku/middleware/ssr'),
-    import('waku/middleware/rsc'),
+    import('@rmarscher/waku/middleware/dev-server'),
+    import('@rmarscher/waku/middleware/ssr'),
+    import('@rmarscher/waku/middleware/rsc'),
   ],
 };
 ```

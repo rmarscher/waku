@@ -14,7 +14,7 @@ import { decodeActionId } from '../renderers/utils.js';
 
 export const SERVER_MODULE_MAP = {
   'rsdw-server': 'react-server-dom-webpack/server.edge',
-  'waku-server': 'waku/server',
+  'waku-server': '@rmarscher/waku/server',
 } as const;
 
 const resolveClientEntryForPrd = (id: string, config: { basePath: string }) => {
