@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
 import { Hono } from 'hono';
-import { handle } from 'hono/aws-lambda';
+import { streamHandle } from 'hono/aws-lambda';
 
 import { runner } from '../hono/runner.js';
 
@@ -25,4 +25,4 @@ app.notFound(async (c) => {
   return c.text('404 Not Found', 404);
 });
 
-export const handler = handle(app);
+export const handler: ReturnType<typeof streamHandle> = streamHandle(app);
