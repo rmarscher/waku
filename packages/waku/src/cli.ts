@@ -47,6 +47,9 @@ const { values, positionals } = parseArgs({
     'with-aws-lambda': {
       type: 'boolean',
     },
+    'with-aws-lambda-sst': {
+      type: 'boolean',
+    },
     'experimental-partial': {
       type: 'boolean',
     },
@@ -129,6 +132,7 @@ async function runBuild() {
       (values['with-cloudflare'] ? 'cloudflare' : undefined) ||
       (values['with-partykit'] ? 'partykit' : undefined) ||
       (values['with-deno'] ? 'deno' : undefined) ||
+      (values['with-aws-lambda-sst'] ? 'aws-lambda-sst' : undefined) ||
       (values['with-aws-lambda'] ? 'aws-lambda' : undefined),
   });
 }
@@ -189,6 +193,7 @@ Options:
   --with-partykit       Output for PartyKit on build
   --with-deno           Output for Deno on build
   --with-aws-lambda     Output for AWS Lambda on build
+  --with-aws-lambda-sst Output for AWS Lambda compatible with SST Ion on build
   -p, --port            Port number for the server
   -v, --version         Display the version number
   -h, --help            Display this help message

@@ -63,6 +63,7 @@ import { deployCloudflarePlugin } from '../plugins/vite-plugin-deploy-cloudflare
 import { deployDenoPlugin } from '../plugins/vite-plugin-deploy-deno.js';
 import { deployPartykitPlugin } from '../plugins/vite-plugin-deploy-partykit.js';
 import { deployAwsLambdaPlugin } from '../plugins/vite-plugin-deploy-aws-lambda.js';
+import { deployAwsLambdaSstPlugin } from '../plugins/vite-plugin-deploy-aws-lambda-sst.js';
 
 // TODO this file and functions in it are too long. will fix.
 
@@ -90,6 +91,7 @@ const deployPlugins = (config: ResolvedConfig) => [
   deployDenoPlugin(config),
   deployPartykitPlugin(config),
   deployAwsLambdaPlugin(config),
+  deployAwsLambdaSstPlugin(config),
 ];
 
 const analyzeEntries = async (rootDir: string, config: ResolvedConfig) => {
@@ -713,8 +715,10 @@ export async function build(options: {
     | 'partykit'
     | 'deno'
     | 'aws-lambda'
+    | 'aws-lambda-sst'
     | undefined;
 }) {
+  console.log('deploy setting =', options.deploy);
   const env = options.env || {};
   const config = await resolveConfig(options.config);
   const rootDir = (

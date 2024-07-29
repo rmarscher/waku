@@ -159,6 +159,7 @@ type PlatformObject = {
       | 'partykit'
       | 'deno'
       | 'aws-lambda'
+      | 'aws-lambda-sst'
       | undefined;
     unstable_phase?:
       | 'analyzeEntries'
