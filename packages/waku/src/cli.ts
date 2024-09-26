@@ -101,11 +101,20 @@ async function runDev() {
   const config = await loadConfig();
   const honoEnhancer = config.unstable_honoEnhancer || ((app) => app);
   const app = new Hono();
+  const wakuMiddleware = runner({
+    cmd: 'dev',
+    config,
+    env: process.env as any,
+  });
   app.use(contextStorage());
   if (values['experimental-compress']) {
     app.use(compress());
   }
-  app.use('*', runner({ cmd: 'dev', config, env: process.env as any }));
+  app.use('/RSC/*', wakuMiddleware);
+  app.use('/assets/*', wakuMiddleware);
+  app.use('/guests/*', wakuMiddleware);
+  app.use('/staff/*', wakuMiddleware);
+  app.use('/account/*', wakuMiddleware);
   app.notFound((c) => {
     // FIXME can we avoid hardcoding the public path?
     const file = path.join('public', '404.html');

@@ -28,6 +28,15 @@ const getServeJsContent = (
 import path from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
 import { runner, importHono, importHonoNodeServerServeStatic, importHonoAwsLambda } from 'waku/unstable_hono';
+import { Agent, request, setGlobalDispatcher } from "undici";
+
+const agent = new Agent({
+  connect: {
+    rejectUnauthorized: false,
+  },
+});
+
+setGlobalDispatcher(agent);
 
 const { Hono } = await importHono();
 const { serveStatic } = await importHonoNodeServerServeStatic();
@@ -40,13 +49,48 @@ try {
 const distDir = '${distDir}';
 const publicDir = '${distPublic}';
 const loadEntries = () => import('${srcEntriesFile}');
-
-const app = new Hono();
+const wakuMiddleware = runner({ cmd: 'start', loadEntries, env: process.env });
+export const app = new Hono();
 if (contextStorage) {
   app.use(contextStorage());
 }
 app.use('*', serveStatic({ root: distDir + '/' + publicDir }));
-app.use('*', runner({ cmd: 'start', loadEntries, env: process.env }));
+app.use('/RSC/*', wakuMiddleware);
+app.use('/assets/*', wakuMiddleware);
+app.use('/guests/*', wakuMiddleware);
+app.use('/staff/*', wakuMiddleware);
+app.use('/account/*', wakuMiddleware);
+app.use("*", async (c, next) => {
+  if (c.finalized) {
+    return next();
+  }
+  const url = new URL(c.req.url);
+  url.hostname = "prod-guests.playalunapresents.com";
+  url.port = "";
+  url.protocol = "https:";
+  try {
+    console.log('making proxy request to', url.toString());
+    const resp = await request(url, {
+      method: c.req.method,
+      headers: c.req.raw.headers,
+      body: c.req.raw.body,
+    });
+    c.status(resp.statusCode);
+    for (const [key, value] of Object.entries(resp.headers)) {
+      c.header(key, value);
+    }
+    // console.log("got response status", resp.statusCode, resp.headers);
+    if ((resp.statusCode < 300 || resp.statusCode >= 400) && resp.statusCode !== 204) {
+      return c.body(resp.body);
+    }
+    return c.body(null);
+  } catch (e) {
+    console.error(e);
+    c.status(500);
+    return c.text("Unexpected error");
+  }
+});
+// app.use('*', runner({ cmd: 'start', loadEntries, env: process.env }));
 app.notFound(async (c) => {
   const file = path.join(distDir, publicDir, '404.html');
   if (existsSync(file)) {
