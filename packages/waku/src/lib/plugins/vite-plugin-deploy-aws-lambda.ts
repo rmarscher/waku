@@ -1,10 +1,22 @@
 import path from 'node:path';
-import { writeFileSync } from 'node:fs';
+import {
+  appendFileSync,
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  renameSync,
+  writeFileSync,
+} from 'node:fs';
 import type { Plugin } from 'vite';
 
 import { unstable_getPlatformObject } from '../../server.js';
 import { SRC_ENTRIES } from '../constants.js';
-import { DIST_PUBLIC } from '../builder/constants.js';
+import {
+  DIST_ASSETS,
+  DIST_ENTRIES_JS,
+  DIST_PUBLIC,
+} from '../builder/constants.js';
 
 const SERVE_JS = 'serve-aws-lambda.js';
 
@@ -19,7 +31,7 @@ import { runner, importHono, importHonoNodeServerServeStatic, importHonoAwsLambd
 
 const { Hono } = await importHono();
 const { serveStatic } = await importHonoNodeServerServeStatic();
-const { handle } = await importHonoAwsLambda();
+const { streamHandle } = await importHonoAwsLambda();
 let contextStorage;
 try {
  ({ contextStorage } = await import('hono/context-storage'));
@@ -43,12 +55,13 @@ app.notFound(async (c) => {
   return c.text('404 Not Found', 404);
 });
 
-export const handler = handle(app);
+export const handler = streamHandle(app);
 `;
 
 export function deployAwsLambdaPlugin(opts: {
   srcDir: string;
   distDir: string;
+  privateDir: string;
 }): Plugin {
   const platformObject = unstable_getPlatformObject();
   let entriesFile: string;
@@ -93,6 +106,52 @@ export function deployAwsLambdaPlugin(opts: {
         path.join(opts.distDir, 'package.json'),
         JSON.stringify({ type: 'module' }, null, 2),
       );
+
+      // Move the distDir so we can move files back to different locations
+      renameSync(opts.distDir, '_dist');
+      mkdirSync(opts.distDir);
+
+      const functionDir = path.join(opts.distDir, 'function');
+      const functionPublicDir = path.join(functionDir, DIST_PUBLIC);
+      const publicDir = path.join(opts.distDir, 'public');
+
+      // Move everything to the function folder
+      renameSync('_dist', functionDir);
+      // Then move the function public folder
+      renameSync(functionPublicDir, publicDir);
+
+      if (existsSync(opts.privateDir)) {
+        cpSync(opts.privateDir, path.join(functionDir, opts.privateDir), {
+          recursive: true,
+        });
+      }
+
+      appendFileSync(
+        path.join(functionDir, DIST_ENTRIES_JS),
+        `export const buildData = ${JSON.stringify(platformObject.buildData)};`,
+      );
+
+      // Assume that any user files in public do not need to be bundled
+      // with the lambda function but public/assets/*.js and css do.
+      // We'll also copy any html files to the function public folder
+      // for use as custom error pages.
+      mkdirSync(functionPublicDir);
+      const publicAssetsDir = path.join(publicDir, DIST_ASSETS);
+      const files = readdirSync(publicAssetsDir).filter(
+        (file) => file.endsWith('.css') || file.endsWith('.js'),
+      );
+      for (const file of files) {
+        cpSync(
+          path.join(publicAssetsDir, file),
+          path.join(functionPublicDir, DIST_ASSETS, file),
+        );
+      }
+      const htmlFiles = readdirSync(publicDir).filter((file) =>
+        file.endsWith('.html'),
+      );
+      for (const file of htmlFiles) {
+        cpSync(path.join(publicDir, file), path.join(functionPublicDir, file));
+      }
     },
   };
 }
