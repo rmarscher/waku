@@ -2,6 +2,7 @@
 
 export { runner } from './lib/hono/runner.js';
 
+export const importHonoContextStorage = () => import('hono/context-storage');
 export const importHono = () => import('hono');
 export const importHonoNodeServer: any = () => import('@hono/node-server');
 export const importHonoNodeServerServeStatic = () =>
