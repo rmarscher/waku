@@ -22,7 +22,9 @@ const packageManager = /pnpm/.test(userAgent)
   ? 'pnpm'
   : /yarn/.test(userAgent)
     ? 'yarn'
-    : 'npm';
+    : /bun/.test(userAgent)
+      ? 'bun'
+      : 'npm';
 const commands = {
   pnpm: {
     install: 'pnpm install',
@@ -33,6 +35,11 @@ const commands = {
     install: 'yarn',
     dev: 'yarn dev',
     create: 'yarn create waku',
+  },
+  bun: {
+    install: 'bun install',
+    dev: 'bun run dev',
+    create: 'bun create waku',
   },
   npm: {
     install: 'npm install',
