@@ -33,12 +33,43 @@ const serverEntry = adapter(
 );
 
 // Export the server entry with optional dev server wrapper
+// IMPORTANT: Custom handlers must be part of the default export object
 export default {
   ...serverEntry,
   // Optionally wrap fetch with dev server for local development
   fetch: patchFetchForDev(serverEntry.fetch, {
     persist: { path: '.wrangler/state/v3' },
   }),
+
+  // ADVANCED: Add custom Cloudflare Workers handlers here
+  // These must be part of the default export, not separate named exports
+  // See: https://developers.cloudflare.com/workers/runtime-apis/handlers/
+
+  // Example: Scheduled handler (cron jobs)
+  // scheduled: async (event, env, ctx) => {
+  //   console.log('Cron job running at', new Date(event.scheduledTime));
+  // },
+
+  // Example: Queue consumer
+  // queue: async (batch, env, ctx) => {
+  //   for (const message of batch.messages) {
+  //     console.log('Processing message:', message.body);
+  //   }
+  // },
+
+  // Example: Tail consumer (for logging)
+  // tail: async (events, env, ctx) => {
+  //   for (const event of events) {
+  //     console.log(event);
+  //   }
+  // },
+
+  // Example: Trace handler (for observability)
+  // trace: async (traces, env, ctx) => {
+  //   for (const trace of traces) {
+  //     console.log(trace);
+  //   }
+  // },
 };
 
 // Export Hono context getter for use in components
@@ -46,44 +77,17 @@ export const getHonoContext = ((globalThis as any).__WAKU_GET_HONO_CONTEXT__ ||=
   getContext);
 
 /**
- * ADVANCED: Custom Cloudflare Handlers
- *
- * You can export additional handlers for Cloudflare Workers features:
- */
-
-// Example: Scheduled handler (cron jobs)
-// export async function scheduled(
-//   event: ScheduledEvent,
-//   env: Env,
-//   ctx: ExecutionContext,
-// ) {
-//   // Run scheduled tasks
-//   console.log('Cron job running at', new Date(event.scheduledTime));
-// }
-
-// Example: Queue consumer
-// export async function queue(
-//   batch: MessageBatch,
-//   env: Env,
-//   ctx: ExecutionContext,
-// ) {
-//   for (const message of batch.messages) {
-//     console.log('Processing message:', message.body);
-//   }
-// }
-
-/**
  * ADVANCED: Durable Objects
  *
- * Export Durable Object classes directly:
+ * IMPORTANT: Durable Objects must be exported as named exports (not part of default export)
  */
 
-// Example: Counter Durable Object
+// Example: Counter Durable Object (exported as named export)
 // export class Counter {
 //   state: DurableObjectState;
 //   value: number = 0;
 //
-//   constructor(state: DurableObjectState) {
+//   constructor(state: DurableObjectState, env: Env) {
 //     this.state = state;
 //   }
 //

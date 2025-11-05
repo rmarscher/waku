@@ -23,7 +23,16 @@ export default {
   fetch: patchFetchForDev(serverEntry.fetch, {
     persist: { path: '.wrangler/state/v3' },
   }),
+
+  // Add custom Cloudflare Workers handlers here (must be part of default export):
+  // scheduled: async (event, env, ctx) => { ... },
+  // queue: async (batch, env, ctx) => { ... },
+  // tail: async (events, env, ctx) => { ... },
+  // trace: async (traces, env, ctx) => { ... },
 };
+
+// Export Durable Objects as named exports:
+// export class MyDurableObject { ... }
 
 export const getHonoContext = ((globalThis as any).__WAKU_GET_HONO_CONTEXT__ ||=
   getContext);

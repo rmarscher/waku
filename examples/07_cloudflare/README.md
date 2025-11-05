@@ -86,40 +86,60 @@ export default {
 
 ## Advanced: Custom Handlers
 
-You can export additional Cloudflare Workers handlers from `src/server-entry.tsx`:
+**IMPORTANT**: Custom handlers must be part of the default export object, not separate named exports. This is a requirement of Cloudflare Workers.
+
+You can add additional handlers to the default export in `src/server-entry.tsx`:
 
 ```tsx
-// Scheduled handler (cron jobs)
-export async function scheduled(
-  event: ScheduledEvent,
-  env: Env,
-  ctx: ExecutionContext,
-) {
-  console.log('Cron job running at', new Date(event.scheduledTime));
-}
+export default {
+  ...serverEntry,
+  fetch: patchFetchForDev(serverEntry.fetch),
 
-// Queue consumer
-export async function queue(
-  batch: MessageBatch,
-  env: Env,
-  ctx: ExecutionContext,
-) {
-  for (const message of batch.messages) {
-    console.log('Processing message:', message.body);
+  // Scheduled handler (cron jobs) - must be part of default export
+  scheduled: async (event, env, ctx) => {
+    console.log('Cron job running at', new Date(event.scheduledTime));
+  },
+
+  // Queue consumer - must be part of default export
+  queue: async (batch, env, ctx) => {
+    for (const message of batch.messages) {
+      console.log('Processing message:', message.body);
+    }
+  },
+
+  // Other supported handlers: tail, trace
+};
+```
+
+Don't forget to configure these in your `wrangler.jsonc`:
+
+```jsonc
+{
+  "triggers": {
+    "crons": ["0 0 * * *"]  // Run daily at midnight
+  },
+  "queues": {
+    "producers": [
+      { "queue": "my-queue", "binding": "MY_QUEUE" }
+    ],
+    "consumers": [
+      { "queue": "my-queue" }
+    ]
   }
 }
 ```
 
 ## Advanced: Durable Objects
 
-Export Durable Object classes directly:
+**IMPORTANT**: Durable Objects must be exported as named exports (not part of the default export). Add them to `src/server-entry.tsx`:
 
 ```tsx
+// Export Durable Object classes as named exports
 export class Counter {
   state: DurableObjectState;
   value: number = 0;
 
-  constructor(state: DurableObjectState) {
+  constructor(state: DurableObjectState, env: Env) {
     this.state = state;
   }
 
