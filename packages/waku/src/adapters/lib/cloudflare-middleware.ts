@@ -1,13 +1,4 @@
-/**
- * NOTE: This middleware is now built into waku/adapters/cloudflare
- *
- * You can import it directly:
- * import { cloudflareMiddleware } from 'waku/adapters/cloudflare';
- *
- * This file is kept as an example of how to create custom middleware.
- */
-
-// Workaround https://github.com/cloudflare/workers-sdk/issues/6577
+// Workaround for https://github.com/cloudflare/workers-sdk/issues/6577
 import type { Context, MiddlewareHandler } from 'hono';
 
 function isWranglerDev(c: Context): boolean {
@@ -15,7 +6,11 @@ function isWranglerDev(c: Context): boolean {
   return !c.req.header('cf-visitor');
 }
 
-const cloudflareMiddleware = (): MiddlewareHandler => {
+/**
+ * Cloudflare middleware to fix content-encoding issues with Wrangler dev server
+ * This is a workaround for encoding issues when using wrangler dev
+ */
+export const cloudflareMiddleware = (): MiddlewareHandler => {
   return async (c, next) => {
     await next();
     if (!import.meta.env?.PROD) {
@@ -40,5 +35,3 @@ const cloudflareMiddleware = (): MiddlewareHandler => {
     }
   };
 };
-
-export default cloudflareMiddleware;

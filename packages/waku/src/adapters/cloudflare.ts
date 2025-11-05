@@ -7,6 +7,14 @@ import {
 } from 'waku/internals';
 import { joinPath as joinPathOrig } from '../lib/utils/path.js';
 
+// Re-export utilities for easier imports
+export {
+  type CloudflareDevServerOptions,
+  cloudflareDevServer,
+  patchFetchForDev,
+} from './lib/cloudflare-dev-server.js';
+export { cloudflareMiddleware } from './lib/cloudflare-middleware.js';
+
 declare global {
   interface ImportMeta {
     readonly __WAKU_ORIGINAL_PATH__: string;

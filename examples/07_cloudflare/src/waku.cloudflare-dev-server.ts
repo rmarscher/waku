@@ -1,3 +1,12 @@
+/**
+ * NOTE: This dev server wrapper is now built into waku/adapters/cloudflare
+ *
+ * You can import it directly:
+ * import { cloudflareDevServer, patchFetchForDev } from 'waku/adapters/cloudflare';
+ *
+ * This file is kept as an example of how the dev server works.
+ */
+
 import type { Hono } from 'hono';
 import type { BlankEnv, BlankSchema } from 'hono/types';
 
