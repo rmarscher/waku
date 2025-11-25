@@ -131,7 +131,9 @@ Don't forget to configure these in your `wrangler.jsonc`:
 
 ## Advanced: Durable Objects
 
-**IMPORTANT**: Durable Objects must be exported as named exports (not part of the default export). Add them to `src/server-entry.tsx`:
+**IMPORTANT**: Durable Objects must be exported as named exports (not part of the default export).
+
+**Step 1:** Export them as named exports from `src/server-entry.tsx`:
 
 ```tsx
 // Export Durable Object classes as named exports
@@ -154,7 +156,19 @@ export class Counter {
 }
 ```
 
-Don't forget to configure the Durable Object in your `wrangler.jsonc`:
+**Step 2:** Specify them in your adapter options:
+
+```tsx
+const serverEntry = adapter(
+  fsRouter(import.meta.glob('./**/*.tsx', { base: './pages' })),
+  {
+    middlewareFns: [contextStorage, cloudflareMiddleware],
+    durableObjects: ['Counter'], // Add your Durable Object class names here
+  },
+);
+```
+
+**Step 3:** Configure the Durable Object in your `wrangler.jsonc`:
 
 ```jsonc
 {

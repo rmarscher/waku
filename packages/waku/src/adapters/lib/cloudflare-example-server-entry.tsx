@@ -29,6 +29,8 @@ const serverEntry = adapter(
       contextStorage, // Enable Hono context storage
       cloudflareMiddleware, // Fix Wrangler dev encoding issues
     ],
+    // If you have Durable Objects, list them here:
+    // durableObjects: ['Counter', 'ChatRoom'],
   },
 );
 
@@ -80,6 +82,11 @@ export const getHonoContext = ((globalThis as any).__WAKU_GET_HONO_CONTEXT__ ||=
  * ADVANCED: Durable Objects
  *
  * IMPORTANT: Durable Objects must be exported as named exports (not part of default export)
+ *
+ * Steps to add Durable Objects:
+ * 1. Export the class as a named export from this file
+ * 2. Add the class name to the durableObjects array in adapter options above
+ * 3. Configure the Durable Object in wrangler.jsonc
  */
 
 // Example: Counter Durable Object (exported as named export)
@@ -98,6 +105,15 @@ export const getHonoContext = ((globalThis as any).__WAKU_GET_HONO_CONTEXT__ ||=
 //       return new Response(String(this.value));
 //     }
 //     return new Response(String(this.value));
+//   }
+// }
+//
+// Then add 'Counter' to durableObjects array above, and configure in wrangler.jsonc:
+// {
+//   "durable_objects": {
+//     "bindings": [
+//       { "name": "COUNTER", "class_name": "Counter", "script_name": "waku-project" }
+//     ]
 //   }
 // }
 

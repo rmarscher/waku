@@ -40,9 +40,21 @@ export default createServerEntryAdapter(
           default: () => MiddlewareHandler;
         }>
       >;
+      /**
+       * List of Durable Object class names to export from the worker.
+       * These should match the named exports from your server-entry.tsx.
+       *
+       * @example
+       * durableObjects: ['Counter', 'ChatRoom']
+       */
+      durableObjects?: string[];
     },
   ) => {
-    const { middlewareFns = [], middlewareModules = {} } = options || {};
+    const {
+      middlewareFns = [],
+      middlewareModules = {},
+      durableObjects = [],
+    } = options || {};
     const app = new Hono();
     app.use(contextMiddleware());
     for (const middlewareFn of middlewareFns) {
@@ -74,6 +86,7 @@ export default createServerEntryAdapter(
     >[0] = {
       distDir: config.distDir,
       DIST_PUBLIC,
+      durableObjects,
     };
     return {
       fetch: app.fetch,
