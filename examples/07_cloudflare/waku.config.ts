@@ -8,12 +8,6 @@ export default defineConfig({
   vite: {
     plugins: [
       cloudflare({
-        config: {
-          main: './src/cloudflare-entry.ts',
-          assets: {
-            directory: './public',
-          },
-        },
         viteEnvironment: {
           name: 'rsc',
         },

@@ -31,8 +31,6 @@ export default {
 `,
   );
 
-  const mainEntry = indexFile;
-
   const wranglerTomlFile = path.resolve('wrangler.toml');
   const wranglerJsonFile = path.resolve('wrangler.json');
   const wranglerJsoncFile = path.resolve('wrangler.jsonc');
@@ -58,7 +56,7 @@ export default {
   "name": ${JSON.stringify(projectName)},
   ${
     serverless
-      ? `"main": ${JSON.stringify(forceRelativePath(path.relative(process.cwd(), mainEntry)))},
+      ? `"main": "waku/adapters/cloudflare-entry",
   // nodejs_als is required for Waku server-side request context
   // It can be removed if only building static pages
   "compatibility_flags": ["nodejs_als"],
@@ -90,5 +88,3 @@ export default async function buildEnhancer(
     await postBuild(options);
   };
 }
-
-const forceRelativePath = (s: string) => (s.startsWith('.') ? s : './' + s);
