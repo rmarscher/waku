@@ -12,13 +12,17 @@ export type BuildOptions = {
 };
 
 async function postBuild({ distDir, DIST_PUBLIC, serverless }: BuildOptions) {
-  const mainEntry = path.resolve(
-    path.join(distDir, 'server', 'serve-cloudflare.js'),
-  );
+  const indexFile = path.resolve(path.join(distDir, 'server', 'index.js'));
+  const wakuFile = path.resolve(path.join(distDir, 'server', 'waku.js'));
+
+  // Move existing index.js to waku.js
+  fs.renameSync(indexFile, wakuFile);
+
+  // Write new index.js
   fs.writeFileSync(
-    mainEntry,
+    indexFile,
     `\
-import { INTERNAL_runFetch, unstable_serverEntry as serverEntry } from './index.js';
+import { INTERNAL_runFetch, unstable_serverEntry as serverEntry } from './waku.js';
 
 export default {
   ...(serverEntry.handlers ? serverEntry.handlers : {}),
@@ -26,6 +30,8 @@ export default {
 };
 `,
   );
+
+  const mainEntry = indexFile;
 
   const wranglerTomlFile = path.resolve('wrangler.toml');
   const wranglerJsonFile = path.resolve('wrangler.json');
