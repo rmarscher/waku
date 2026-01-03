@@ -1,5 +1,5 @@
 // import nodeLoaderCloudflare from '@hiogawa/node-loader-cloudflare/vite';
-import { cloudflare } from "@cloudflare/vite-plugin";
+import { cloudflare } from '@cloudflare/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'waku/config';
@@ -9,6 +9,16 @@ export default defineConfig({
   vite: {
     plugins: [
       cloudflare({
+        config: {
+          ...(process.env.NODE_ENV === 'production'
+            ? {}
+            : {
+                main: './src/cloudflare-entry.ts',
+                assets: {
+                  directory: './public',
+                },
+              }),
+        },
         viteEnvironment: {
           name: 'rsc',
         },
@@ -23,16 +33,6 @@ export default defineConfig({
           plugins: ['babel-plugin-react-compiler'],
         },
       }),
-      // nodeLoaderCloudflare({
-      //   environments: ['rsc'],
-      //   build: true,
-      //   // https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy
-      //   getPlatformProxyOptions: {
-      //     persist: {
-      //       path: '.wrangler/state/v3',
-      //     },
-      //   },
-      // }),
     ],
   },
 });

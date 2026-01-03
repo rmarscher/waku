@@ -39,6 +39,7 @@ function rscPlugins(config: Required<Config>) {
     rsc({
       serverHandler: false,
       keepUseCientProxy: true,
+      loadModuleDevProxy: true,
       useBuildAppHook: true,
       clientChunks: (meta) => meta.serverChunk,
     }),
