@@ -7,15 +7,7 @@ import { defineConfig } from 'waku/config';
 export default defineConfig({
   vite: {
     plugins: [
-      cloudflare({
-        viteEnvironment: {
-          name: 'rsc',
-        },
-        persistState: {
-          path: '.wrangler/state/v3',
-        },
-        auxiliaryWorkers: [],
-      }),
+      cloudflare({ viteEnvironment: { name: 'rsc' } }),
       tailwindcss(),
       react({
         babel: {
