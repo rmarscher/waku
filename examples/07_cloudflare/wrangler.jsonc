@@ -1,5 +1,6 @@
 {
   "name": "waku-project",
+  // "main": "./src/main.ts",
   "main": "./dist/server/serve-cloudflare.js",
   // nodejs_als is required for Waku server-side request context
   // It can be removed if only building static pages
